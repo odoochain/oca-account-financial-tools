@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2021-01-25 17:44+0000\n"
+"PO-Revision-Date: 2021-04-23 17:47+0000\n"
 "Last-Translator: Bosd <c5e2fd43-d292-4c90-9d1f-74ff3436329a@anonaddy.me>\n"
 "Language-Team: none\n"
 "Language: nl\n"
@@ -18,55 +18,59 @@ msgstr ""
 
 #. module: account_menu
 #: model:ir.model,name:account_menu.model_account_group
+#, fuzzy
 msgid "Account Group"
-msgstr ""
+msgstr "Rekeningsgroep"
 
 #. module: account_menu
 #: model:ir.actions.act_window,name:account_menu.account_group_action
 #: model:ir.ui.menu,name:account_menu.account_group_menu
 msgid "Account Groups"
-msgstr ""
+msgstr "Rubrieken"
 
 #. module: account_menu
 #: model:ir.model,name:account_menu.model_account_account_tag
 msgid "Account Tag"
-msgstr ""
+msgstr "Rekening label"
 
 #. module: account_menu
 #: model:ir.actions.act_window,name:account_menu.account_account_tag_action
 #: model:ir.ui.menu,name:account_menu.account_tag_menu
 msgid "Account Tags"
-msgstr ""
+msgstr "Boekhoudingslabels"
 
 #. module: account_menu
 #: model_terms:ir.ui.view,arch_db:account_menu.view_account_tax_group_form
 #: model_terms:ir.ui.view,arch_db:account_menu.view_account_tax_group_search
 msgid "Account Tax Group"
-msgstr ""
+msgstr "BTW-groep"
 
 #. module: account_menu
-#: model:ir.actions.act_window,name:account_menu.action_account_tax_group
-#: model:ir.ui.menu,name:account_menu.account_tax_group_menu
 #: model_terms:ir.ui.view,arch_db:account_menu.view_account_tax_group_search
 msgid "Account Tax Groups"
-msgstr ""
+msgstr "Belastingsgroepen"
 
 #. module: account_menu
 #: model:ir.actions.act_window,name:account_menu.account_account_template_action
 #: model:ir.ui.menu,name:account_menu.menu_account_account_template
 msgid "Account Templates"
-msgstr ""
+msgstr "Rekeningsjabloon"
 
 #. module: account_menu
 #: model:ir.ui.menu,name:account_menu.account_type_menu
 msgid "Account Types"
-msgstr ""
+msgstr "Rekening type"
 
 #. module: account_menu
 #: model:ir.model.fields,field_description:account_menu.field_account_account_tag__account_ids
 #: model:ir.model.fields,field_description:account_menu.field_account_group__account_ids
 msgid "Accounts"
 msgstr "Rekeningen"
+
+#. module: account_menu
+#: model_terms:ir.ui.view,arch_db:account_menu.res_config_settings_view_form
+msgid "Anglo-Saxon Accounting"
+msgstr ""
 
 #. module: account_menu
 #: model:ir.ui.menu,name:account_menu.menu_accounting_statement_bank
@@ -81,17 +85,23 @@ msgstr "Bank en Cash"
 #. module: account_menu
 #: model:ir.ui.menu,name:account_menu.menu_accounting_statement_cash
 msgid "Cash Registers"
-msgstr ""
+msgstr "Kassysteem"
 
 #. module: account_menu
 #: model:ir.ui.menu,name:account_menu.menu_account_chart_template
 msgid "Chart of Accounts Templates"
+msgstr "Grootboekschema"
+
+#. module: account_menu
+#: model:ir.model,name:account_menu.model_res_config_settings
+msgid "Config Settings"
 msgstr ""
 
 #. module: account_menu
 #: model:ir.model.fields,field_description:account_menu.field_account_account_tag__display_name
 #: model:ir.model.fields,field_description:account_menu.field_account_group__display_name
 #: model:ir.model.fields,field_description:account_menu.field_account_tax_group__display_name
+#: model:ir.model.fields,field_description:account_menu.field_res_config_settings__display_name
 msgid "Display Name"
 msgstr "Weergavenaam"
 
@@ -105,6 +115,7 @@ msgstr "Fiscale positie sjabloon"
 #: model:ir.model.fields,field_description:account_menu.field_account_account_tag__id
 #: model:ir.model.fields,field_description:account_menu.field_account_group__id
 #: model:ir.model.fields,field_description:account_menu.field_account_tax_group__id
+#: model:ir.model.fields,field_description:account_menu.field_res_config_settings__id
 msgid "ID"
 msgstr "ID"
 
@@ -112,13 +123,36 @@ msgstr "ID"
 #: model:ir.model.fields,field_description:account_menu.field_account_account_tag____last_update
 #: model:ir.model.fields,field_description:account_menu.field_account_group____last_update
 #: model:ir.model.fields,field_description:account_menu.field_account_tax_group____last_update
+#: model:ir.model.fields,field_description:account_menu.field_res_config_settings____last_update
 msgid "Last Modified on"
 msgstr "Laatst bijgewerkt op"
+
+#. module: account_menu
+#: model_terms:ir.ui.view,arch_db:account_menu.res_config_settings_view_form
+msgid ""
+"Record the cost of a good as an expense when this good is\n"
+"                                invoiced to a final customer (instead of "
+"recording the cost as soon\n"
+"                                as the product is received in stock)."
+msgstr ""
+
+#. module: account_menu
+#: model:ir.model.fields,help:account_menu.field_res_config_settings__anglo_saxon_accounting
+msgid ""
+"Record the cost of a good as an expense when this good is invoiced to a "
+"final customer."
+msgstr ""
 
 #. module: account_menu
 #: model:ir.model,name:account_menu.model_account_tax_group
 msgid "Tax Group"
 msgstr "Belastingsgroep"
+
+#. module: account_menu
+#: model:ir.actions.act_window,name:account_menu.action_account_tax_group
+#: model:ir.ui.menu,name:account_menu.account_tax_group_menu
+msgid "Tax Groups"
+msgstr ""
 
 #. module: account_menu
 #: model:ir.ui.menu,name:account_menu.menu_account_tax_template
@@ -134,3 +168,8 @@ msgstr "Belastingen"
 #: model:ir.ui.menu,name:account_menu.menu_account_coa_settings
 msgid "Templates"
 msgstr "Sjablonen"
+
+#. module: account_menu
+#: model:ir.model.fields,field_description:account_menu.field_res_config_settings__anglo_saxon_accounting
+msgid "Use anglo-saxon accounting"
+msgstr ""

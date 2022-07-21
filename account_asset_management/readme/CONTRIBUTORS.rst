@@ -14,3 +14,9 @@
   * Ernesto Tejeda
   * Pedro M. Baeza
   * João Marques
+  * Víctor Martínez
+
+* `ForgeFlow <https://www.forgeflow.com>`_:
+
+  * Jordi Ballester <jordi.ballester@forgeflow.com>
+  * Miquel Raïch <miquel.raich@forgeflow.com>

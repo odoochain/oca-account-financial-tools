@@ -15,7 +15,15 @@ _logger = logging.getLogger(__name__)
 class AccountAssetRemove(models.TransientModel):
     _name = "account.asset.remove"
     _description = "Remove Asset"
+    _check_company_auto = True
 
+    company_id = fields.Many2one(
+        comodel_name="res.company",
+        string="Company",
+        readonly=True,
+        required=True,
+        default=lambda self: self._default_company_id(),
+    )
     date_remove = fields.Date(
         string="Asset Removal Date",
         required=True,
@@ -30,25 +38,25 @@ class AccountAssetRemove(models.TransientModel):
     account_sale_id = fields.Many2one(
         comodel_name="account.account",
         string="Asset Sale Account",
-        domain=[("deprecated", "=", False)],
+        domain="[('deprecated', '=', False), ('company_id', '=', company_id)]",
         default=lambda self: self._default_account_sale_id(),
     )
     account_plus_value_id = fields.Many2one(
         comodel_name="account.account",
         string="Plus-Value Account",
-        domain=[("deprecated", "=", False)],
+        domain="[('deprecated', '=', False), ('company_id', '=', company_id)]",
         default=lambda self: self._default_account_plus_value_id(),
     )
     account_min_value_id = fields.Many2one(
         comodel_name="account.account",
         string="Min-Value Account",
-        domain=[("deprecated", "=", False)],
+        domain="[('deprecated', '=', False), ('company_id', '=', company_id)]",
         default=lambda self: self._default_account_min_value_id(),
     )
     account_residual_value_id = fields.Many2one(
         comodel_name="account.account",
         string="Residual Value Account",
-        domain=[("deprecated", "=", False)],
+        domain="[('deprecated', '=', False), ('company_id', '=', company_id)]",
         default=lambda self: self._default_account_residual_value_id(),
     )
     posting_regime = fields.Selection(
@@ -68,6 +76,12 @@ class AccountAssetRemove(models.TransientModel):
     def _check_sale_value(self):
         if self.sale_value < 0:
             raise ValidationError(_("The Sale Value must be positive!"))
+
+    @api.model
+    def _default_company_id(self):
+        asset_id = self.env.context.get("active_id")
+        asset = self.env["account.asset"].browse(asset_id)
+        return asset.company_id
 
     @api.model
     def _default_sale_value(self):
@@ -91,10 +105,7 @@ class AccountAssetRemove(models.TransientModel):
             inv = line.move_id
             comp_curr = inv.company_currency_id
             inv_curr = inv.currency_id
-            if (
-                line.move_id.invoice_payment_state == "paid"
-                or line.parent_state == "draft"
-            ):
+            if line.move_id.payment_state == "paid" or line.parent_state == "draft":
                 account_sale_id = line.account_id.id
                 amount = line.price_subtotal
                 if inv_curr != comp_curr:
@@ -156,7 +167,11 @@ class AccountAssetRemove(models.TransientModel):
             residual_value = asset.value_residual
 
         dlines = asset_line_obj.search(
-            [("asset_id", "=", asset.id), ("type", "=", "depreciate")],
+            [
+                ("asset_id", "=", asset.id),
+                ("type", "=", "depreciate"),
+                ("move_check", "!=", False),
+            ],
             order="line_date desc",
         )
         if dlines:
@@ -181,7 +196,6 @@ class AccountAssetRemove(models.TransientModel):
 
         # create move
         move_vals = {
-            "name": asset.name,
             "date": date_remove,
             "ref": line_name,
             "journal_id": journal_id,
@@ -238,6 +252,8 @@ class AccountAssetRemove(models.TransientModel):
         if not dlines:
             asset.compute_depreciation_board()
             dlines = _dlines(asset)
+        if not dlines:
+            return asset.value_residual
         first_to_depreciate_dl = dlines[0]
 
         first_date = first_to_depreciate_dl.line_date
@@ -257,9 +273,14 @@ class AccountAssetRemove(models.TransientModel):
             )
             last_depr_date = create_dl.line_date
 
-        period_number_days = (first_date - last_depr_date).days
+        # Never create move.
+        same_month = (
+            last_depr_date.month == first_to_depreciate_dl.line_date.month and 1 or 0
+        )
+
+        period_number_days = (first_date - last_depr_date).days + same_month
         new_line_date = date_remove + relativedelta(days=-1)
-        to_depreciate_days = (new_line_date - last_depr_date).days
+        to_depreciate_days = (new_line_date - last_depr_date).days + same_month
         to_depreciate_amount = round(
             float(to_depreciate_days)
             / float(period_number_days)
@@ -268,7 +289,11 @@ class AccountAssetRemove(models.TransientModel):
         )
         residual_value = asset.value_residual - to_depreciate_amount
         if to_depreciate_amount:
-            update_vals = {"amount": to_depreciate_amount, "line_date": new_line_date}
+            update_vals = {
+                "amount": to_depreciate_amount,
+                "line_date": new_line_date,
+                "line_days": to_depreciate_days,
+            }
             first_to_depreciate_dl.write(update_vals)
             dlines[0].create_move()
             dlines -= dlines[0]
@@ -309,6 +334,7 @@ class AccountAssetRemove(models.TransientModel):
                     "name": asset.name,
                     "account_id": self.account_residual_value_id.id,
                     "analytic_account_id": asset.account_analytic_id.id,
+                    "analytic_tag_ids": [(4, tag.id) for tag in asset.analytic_tag_ids],
                     "debit": residual_value,
                     "credit": 0.0,
                     "partner_id": partner_id,
@@ -322,6 +348,9 @@ class AccountAssetRemove(models.TransientModel):
                         "name": asset.name,
                         "account_id": self.account_sale_id.id,
                         "analytic_account_id": asset.account_analytic_id.id,
+                        "analytic_tag_ids": [
+                            (4, tag.id) for tag in asset.analytic_tag_ids
+                        ],
                         "debit": sale_value,
                         "credit": 0.0,
                         "partner_id": partner_id,
@@ -338,6 +367,7 @@ class AccountAssetRemove(models.TransientModel):
                     "name": asset.name,
                     "account_id": account_id,
                     "analytic_account_id": asset.account_analytic_id.id,
+                    "analytic_tag_ids": [(4, tag.id) for tag in asset.analytic_tag_ids],
                     "debit": balance < 0 and -balance or 0.0,
                     "credit": balance > 0 and balance or 0.0,
                     "partner_id": partner_id,

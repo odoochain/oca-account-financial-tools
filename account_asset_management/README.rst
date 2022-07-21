@@ -7,9 +7,9 @@ Assets Management
    !! changes will be overwritten.                   !!
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-.. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
+.. |badge1| image:: https://img.shields.io/badge/maturity-Mature-brightgreen.png
     :target: https://odoo-community.org/page/development-status
-    :alt: Beta
+    :alt: Mature
 .. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
@@ -42,8 +42,6 @@ or automatically by two ways:
 
 These options are compatibles each other.
 
-Excel based reporting is available via the 'account_asset_management_xls' module.
-
 The module contains a large number of functional enhancements compared to
 the standard account_asset module from Odoo.
 
@@ -64,6 +62,17 @@ Changelog
 ~~~~~~~~~~~~~~~~~~~~~~~
 
  * [BREAKING] Removed all functionality associated with `account.fiscal.year`
+
+13.0.3.0.0 (2021-07-06)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* Allow to reverse the posting of a depreciation line instead of deleting the
+  journal entry.
+
+13.0.2.0.0 (2021-02-19)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* Add support for multi-company
 
 13.0.1.0.0 (2019-10-21)
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -130,6 +139,12 @@ Contributors
   * Ernesto Tejeda
   * Pedro M. Baeza
   * João Marques
+  * Víctor Martínez
+
+* `ForgeFlow <https://www.forgeflow.com>`_:
+
+  * Jordi Ballester <jordi.ballester@forgeflow.com>
+  * Miquel Raïch <miquel.raich@forgeflow.com>
 
 Maintainers
 ~~~~~~~~~~~

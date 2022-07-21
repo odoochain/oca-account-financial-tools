@@ -38,6 +38,10 @@ This module adds all missing menu entries for the **Account** module.
 * Tax Templates
 * Fiscal Position Templates
 
+Additionally, this module also enables the option to enable or disable
+Anglo-Saxon accounting in the Chart of Account Template form view and
+in the Invoicing Settings.
+
 **Table of contents**
 
 .. contents::
@@ -52,6 +56,12 @@ To see all the menus, make sure:
   "Technical Settings / Show Full Accounting Features"
 
 * The page is running in debug mode
+
+Known issues / Roadmap
+======================
+
+* Suggest to rename to something like `account_usability` in 15.0, given that
+  there are now non-menu usability improvements in this module.
 
 Bug Tracker
 ===========
@@ -91,6 +101,14 @@ This module is maintained by the OCA.
 OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
+
+.. |maintainer-legalsylvain| image:: https://github.com/legalsylvain.png?size=40px
+    :target: https://github.com/legalsylvain
+    :alt: legalsylvain
+
+Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
+
+|maintainer-legalsylvain| 
 
 This module is part of the `OCA/account-financial-tools <https://github.com/OCA/account-financial-tools/tree/14.0/account_menu>`_ project on GitHub.
 
