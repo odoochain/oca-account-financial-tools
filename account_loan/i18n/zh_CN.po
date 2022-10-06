@@ -128,7 +128,7 @@ msgstr "取消"
 #. module: account_loan
 #: model:ir.model.fields,field_description:account_loan.field_account_loan_pay_amount__cancel_loan
 msgid "Cancel Loan"
-msgstr ""
+msgstr "取消借款"
 
 #. module: account_loan
 #: selection:account.loan,state:0
@@ -255,7 +255,7 @@ msgstr ""
 #. module: account_loan
 #: selection:account.loan,loan_type:0
 msgid "Fixed Principal"
-msgstr ""
+msgstr "固定本金"
 
 #. module: account_loan
 #: model:ir.model.fields,field_description:account_loan.field_account_loan__message_follower_ids
@@ -577,7 +577,7 @@ msgstr ""
 #. module: account_loan
 #: selection:account.loan,rate_type:0
 msgid "Nominal APR"
-msgstr ""
+msgstr "综合年利率"
 
 #. module: account_loan
 #: model:ir.model.fields,field_description:account_loan.field_account_loan__message_needaction_counter

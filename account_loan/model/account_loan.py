@@ -261,6 +261,7 @@ class AccountLoan(models.Model):
         Computes the fixed amount in order to be used if round_on_end is
         checked. On fix-annuity interests are included and on fixed-principal
         and interests it isn't.
+        如果选中round_on_end，则计算要使用的固定数量。固定年金利息包括在内，固定本金和利息不包括在内。
         :return:
         """
         for record in self:
